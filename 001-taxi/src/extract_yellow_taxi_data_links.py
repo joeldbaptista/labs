@@ -1,32 +1,26 @@
 """
 Pull all the links to download NYC Yellow Taxi records
 """
+import re
 import requests
 from bs4 import BeautifulSoup
 
-
-URL = 'https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page'
+URL = "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page"
+# the link may end with one or more spaces
+PATTERN = re.compile(r'https://[a-zA-Z0-9]+\.cloudfront\.net/trip-data/yellow_tripdata_\d{4}-\d{2}\.parquet\s*')
 
 
 def keep_it(link):
-    return (
-        link.get('href') and 
-        'yellow_tripdata' in link.get('href') and 
-        link.get('href').endswith('.parquet')
-    )
+    if link.get("href"):
+        return PATTERN.match(link.get("href"))
+    return False
 
 
 def main():
-    # Fetch the page content
     response = requests.get(URL)
-    soup = BeautifulSoup(response.content, 'html.parser')
-    # Find all links on the page
-    links = soup.find_all('a')
-    # Filter out links that contain 'yellow_tripdata' and end with '.parquet'
-    yellow_taxi_parquet_links = sorted([
-        link.get('href') for link in links if keep_it(link)
-    ])
-    for link in yellow_taxi_parquet_links:
+    soup = BeautifulSoup(response.content, "html.parser")
+    links = soup.find_all("a")
+    for link in sorted([ link.get("href") for link in links if keep_it(link) ]):
         print(link)
 
 
