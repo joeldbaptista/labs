@@ -1,0 +1,4 @@
+--
+DROP SCHEMA IF EXISTS final CASCADE;
+CREATE SCHEMA final;
+

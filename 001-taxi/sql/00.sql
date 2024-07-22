@@ -1,19 +1,6 @@
 -- 
-DROP SCHEMA IF EXISTS staging CASCADE;
-CREATE SCHEMA staging;
-
--- 
-DROP SCHEMA IF EXISTS final CASCADE;
-CREATE SCHEMA final;
-
--- 
 DROP SCHEMA IF EXISTS reference CASCADE;
 CREATE SCHEMA reference;
-
--- source: https://duckdb.org/docs/data/parquet/overview.html
-CREATE TABLE staging.yellow_tripdata AS
-SELECT *, current_timestamp as load_dt
-FROM read_parquet('data/*.parquet', filename=true);
 
 --
 CREATE TABLE reference.time_buckets AS
@@ -46,3 +33,5 @@ FROM (
     SELECT _start
     FROM generate_series(timestamp '2020-01-01', timestamp '2030-01-01', interval '60 minutes') t(_start)
 ) tt;
+
+
