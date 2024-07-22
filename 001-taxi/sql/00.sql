@@ -3,6 +3,11 @@ DROP SCHEMA IF EXISTS reference CASCADE;
 CREATE SCHEMA reference;
 
 --
+CREATE TABLE reference.files AS
+SELECT *
+FROM read_csv('data/data.csv', header=false, columns={'fname': 'TEXT'});
+
+--
 CREATE TABLE reference.time_buckets AS
 SELECT '1 minutes' bucket, _start, _start + INTERVAL '1 minutes' _end
 FROM (
