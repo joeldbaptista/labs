@@ -1,6 +1,0 @@
-services:
-  cronjob:
-    build: .
-    container_name: cronjob
-    volumes:
-      - ./data:/app/data
