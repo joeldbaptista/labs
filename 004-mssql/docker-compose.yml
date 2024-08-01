@@ -1,0 +1,23 @@
+# https://learn.microsoft.com/en-gb/sql/linux/quickstart-install-connect-docker?view=sql-server-ver16&tabs=cli&pivots=cs1-bash
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql-server-2022
+    hostname: sql1
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Hello1234
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    networks:
+      - mssql_network
+
+volumes:
+  mssql_data:
+
+networks:
+  mssql_network:
+    driver: bridge
+
