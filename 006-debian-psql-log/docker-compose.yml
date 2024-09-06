@@ -1,0 +1,57 @@
+services:
+
+  # The database
+  db:
+    build:
+      context: . 
+      dockerfile: postgresql.Dockerfile
+    container_name: db
+    env_file:
+      - .env
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - 5431:5432
+    networks:
+      - postgres-network
+
+  # The event maker
+  app:
+    build:
+      context: .
+      dockerfile: debian.Dockerfile
+    container_name: app 
+    env_file:
+      - .env
+    depends_on: 
+      - db
+    ports:
+      - 8000:8000
+    networks:
+      - postgres-network
+
+  # Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus/config.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    networks:
+      - postgres-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    networks:
+      - postgres-network
+
+networks:
+  postgres-network:
+    driver: bridge
+
