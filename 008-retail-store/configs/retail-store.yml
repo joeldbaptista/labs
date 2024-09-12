@@ -1,0 +1,88 @@
+customers:
+  volume: 100
+  schema:
+    id: 
+      use: "generate_primary_key"
+    first_name:
+      use: "generate_first_name"
+    last_name:
+      use: "generate_last_name"
+    dob: 
+      use: "generate_date"
+      args:
+        low: "1970-01-01"
+        high: "2025-01-01"
+
+products:
+  volume: 1000
+  schema:
+    id:
+      use: "generate_primary_key"
+    product_name:
+      use: "generate_product_name"
+    product_category:
+      use: "select_record"
+      args:
+        fname: "data/retail-store-categories.json"
+        colname: "id"
+    price:
+      use: "generate_price"
+      args:
+        low: 0.1
+        high: 1000000
+
+employees:
+  volume: 50
+  schema:
+    id: 
+      use: "generate_primary_key"
+    first_name:
+      use: "generate_first_name"
+    last_name:
+      use: "generate_last_name"
+    dob: 
+      use: "generate_date"
+      args:
+        low: "1970-01-01"
+        high: "2025-01-01"
+
+orders:
+  volume: 5000
+  schema:
+    id:
+      use: "generate_primary_key"
+    customer_id:
+      use: "generate_foreign_key"
+      args:
+        entity: "customers"
+        colname: "id"
+    employee_id:
+      use: "generate_foreign_key"
+      args:
+        entity: "employees"
+        colname: "id"
+    order_timestamp:
+      use: "generate_timestamp"
+      args:
+        low: "2020-01-01 00:00:00"
+        high: "2025-01-01 00:00:00"
+
+order_product:
+  volume: 10000
+  schema:
+    quantity:
+      use: "generate_non_negative_integer"
+      args:
+        low: 1
+        high: 20
+    product_id:
+      use: "generate_foreign_key"
+      args:
+        entity: "products"
+        colname: "id"
+    order_id:
+      use: "generate_foreign_key"
+      args:
+        entity: "orders"
+        colname: "id"
+

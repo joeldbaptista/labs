@@ -1,0 +1,8 @@
+services:
+  abox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: abox
+    volumes:
+      - ./disk:/home

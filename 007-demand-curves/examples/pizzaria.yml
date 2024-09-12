@@ -1,0 +1,23 @@
+# EXPLANATION
+#
+# This example simulates a 24-hour business with three peak hours: 
+# - the first at 01:30
+# - the second at 12:30
+# - the third at 18:20
+#
+# It is assumed the demand distributions are normal with the given parameters. 
+# For a normal distributions with parameters `location`and `scale`, this means that the 
+# expected peak is at `location` hours (in decimal format), with a base of `scale`; that is, 
+# it is expected that ~68% of the `nevents` to happend between `location - scale` and `location + scale`,
+# and ~95% to happen between `location - 2*scale` and `location + 2*scale`.
+peaks:
+  - location: 1.50
+    scale: 1.0
+    nevents: 500
+  - location: 12.50
+    scale: 0.75
+    nevents: 2500
+  - location: 18.33
+    scale: 1.5
+    nevents: 3000
+
