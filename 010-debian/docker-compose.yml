@@ -1,0 +1,13 @@
+services:
+  uzbox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USERNAME: uza
+        PASSWORD: uza1234
+    container_name: uzbox
+    volumes:
+      - ./uza:/home/uza
+    tty: true # Ensure a TTY is allocated
+
