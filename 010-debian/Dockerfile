@@ -3,6 +3,7 @@ FROM debian:latest
 
 # Install necessary packages
 RUN apt-get update && \
+    apt-get install -y build-essential && \
     apt-get install -y vim tmux sudo wget unzip && \
     apt-get clean
 
@@ -28,5 +29,5 @@ RUN echo "$USERNAME:$PASSWORD" | chpasswd
 WORKDIR /home/$USERNAME
 USER $USERNAME
 
-# Set default shell session to tmux
+# Keep running
 CMD [ "tail", "-f", "/dev/null" ]
