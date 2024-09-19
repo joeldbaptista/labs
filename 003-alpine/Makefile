@@ -2,6 +2,9 @@
 up:
 	sudo docker compose up
 
+upd:
+	sudo docker compose up -d
+
 build:
 	sudo docker compose up --build
 
